@@ -1,4 +1,4 @@
-import React, { Suspense, Fragment } from "react";
+import React, { Suspense, Fragment, useRef } from "react";
 
 const infiniteThenable = { then() {} };
 
@@ -19,12 +19,35 @@ interface Props {
   freeze: boolean;
   children: React.ReactNode;
   placeholder?: React.ReactNode;
+  wrapperProps?: Omit<React.HTMLAttributes<HTMLDivElement>, "ref">;
+  placeholderProps?: Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    "dangerouslySetInnerHTML"
+  >;
 }
 
-export function Freeze({ freeze, children, placeholder = null }: Props) {
+export function Freeze({
+  freeze,
+  children,
+  placeholder,
+  wrapperProps,
+  placeholderProps,
+}: Props) {
+  const childrenRef = useRef<HTMLDivElement>(null);
+
+  const finalPlacholder = placeholder || (
+    <div
+      {...placeholderProps}
+      children={null}
+      dangerouslySetInnerHTML={{ __html: childrenRef.current?.innerHTML || "" }}
+    />
+  );
+
   return (
-    <Suspense fallback={placeholder}>
-      <Suspender freeze={freeze}>{children}</Suspender>
-    </Suspense>
+    <div {...wrapperProps} ref={childrenRef}>
+      <Suspense fallback={finalPlacholder}>
+        <Suspender freeze={Boolean(freeze)}>{children}</Suspender>
+      </Suspense>
+    </div>
   );
 }

@@ -1,13 +1,12 @@
 {
-  "name": "react-freeze",
-  "version": "1.0.4",
-  "description": "React Freeze",
+  "name": "react-freeze-snapshot",
+  "version": "0.0.1",
+  "description": "React Freeze Snapshot",
   "license": "MIT",
-  "repository": "software-mansion/react-freeze",
+  "repository": "joaolfern/react-freeze-snapshot",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
-  "react-native": "src/index.tsx",
   "engines": {
     "node": ">=10"
   },
@@ -24,7 +23,8 @@
   },
   "keywords": [
     "react",
-    "freeze"
+    "freeze",
+    "snapshot"
   ],
   "peerDependencies": {
     "react": ">=17.0.0"
